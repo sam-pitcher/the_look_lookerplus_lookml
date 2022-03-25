@@ -3,7 +3,7 @@ include: "../views_common/period_over_period.view"
 view: order_items_benchmark {
   extends: [period_over_period]
   view_label: "Transaction Information"
-  sql_table_name: `looker-ps-emea-consultants.the_look_perf.order_items`;;
+  sql_table_name: `lookerplus.the_look.order_items`;;
 
   # Dates
 
