@@ -1,6 +1,6 @@
 include: "../views_common/period_over_period.view"
 
-view: order_items {
+view: order_items_benchmark {
   extends: [period_over_period]
   view_label: "Transaction Information"
   sql_table_name: `looker-ps-emea-consultants.the_look_perf.order_items`;;
@@ -107,6 +107,38 @@ view: order_items {
     sql: ${TABLE}.sale_price ;;
   }
 
+  dimension: product_category {
+    type: string
+    sql: ${TABLE}.product_category ;;
+  }
+
+  dimension: product_brand {
+    type: string
+    sql: ${TABLE}.product_brand ;;
+  }
+
+  dimension: product_sku {
+    type: string
+    sql: ${TABLE}.product_sku ;;
+  }
+
+  dimension: is_my_brand {
+    type: yesno
+    sql: ${product_brand} = 'Allegra K' ;;
+  }
+
+  # Customer Information
+
+  dimension: state {
+    type: string
+    sql: ${TABLE}.state ;;
+  }
+
+  dimension: country {
+    type: string
+    sql: ${TABLE}.country ;;
+  }
+
   # Measures
 
   # Order Count
@@ -115,13 +147,7 @@ view: order_items {
     group_label: "My Measures"
     type: count_distinct
     sql: ${order_id} ;;
-    filters: [products.is_my_brand: "Yes"]
-  }
-
-  measure: benchmark_order_count {
-    group_label: "Benchmark Measures"
-    type: count_distinct
-    sql: ${order_id} ;;
+    filters: [is_my_brand: "Yes"]
   }
 
   # Order Item Count
@@ -129,12 +155,7 @@ view: order_items {
   measure: order_item_count {
     group_label: "My Measures"
     type: count
-    filters: [products.is_my_brand: "Yes"]
-  }
-
-  measure: benchmark_order_item_count {
-    group_label: "Benchmark Measures"
-    type: count
+    filters: [is_my_brand: "Yes"]
   }
 
   # Customer Count
@@ -143,13 +164,7 @@ view: order_items {
     group_label: "My Measures"
     type: count_distinct
     sql: ${user_id} ;;
-    filters: [products.is_my_brand: "Yes"]
-  }
-
-  measure: benchmark_customer_count {
-    group_label: "Benchmark Measures"
-    type: count_distinct
-    sql: ${user_id} ;;
+    filters: [is_my_brand: "Yes"]
   }
 
   # Product Count
@@ -157,14 +172,8 @@ view: order_items {
   measure: product_count {
     group_label: "My Measures"
     type: count_distinct
-    sql: ${products.sku} ;;
-    filters: [products.is_my_brand: "Yes"]
-  }
-
-  measure: benchmark_product_count {
-    group_label: "Benchmark Measures"
-    type: count_distinct
-    sql: ${products.sku} ;;
+    sql: ${product_sku} ;;
+    filters: [is_my_brand: "Yes"]
   }
 
   # Total Sales Amount
@@ -173,41 +182,21 @@ view: order_items {
     group_label: "My Measures"
     type: sum
     sql: ${sale_price} ;;
-    filters: [products.is_my_brand: "Yes"]
-  }
-
-  measure: benchmark_total_sales_amount {
-    group_label: "Benchmark Measures"
-    type: sum
-    sql: ${sale_price} ;;
+    filters: [is_my_brand: "Yes"]
   }
 
   measure: total_sales_amount_previous_period {
     group_label: "My Measures"
     type: sum
     sql: ${sale_price} ;;
-    filters: [products.is_my_brand: "Yes", period: "%Last%"]
+    filters: [is_my_brand: "Yes", period: "%Last%"]
   }
 
   measure: total_sales_amount_current_period {
     group_label: "My Measures"
     type: sum
     sql: ${sale_price} ;;
-    filters: [products.is_my_brand: "Yes", period: "%This%"]
-  }
-
-  measure: benchmark_total_sales_amount_previous_period {
-    group_label: "Benchmark Measures"
-    type: sum
-    sql: ${sale_price} ;;
-    filters: [period: "%Last%"]
-  }
-
-  measure: benchmark_total_sales_amount_current_period {
-    group_label: "Benchmark Measures"
-    type: sum
-    sql: ${sale_price} ;;
-    filters: [period: "%This%"]
+    filters: [is_my_brand: "Yes", period: "%This%"]
   }
 
 }

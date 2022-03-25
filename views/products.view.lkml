@@ -9,6 +9,11 @@ view: products {
     sql: ${TABLE}.id ;;
   }
 
+  dimension: is_my_brand {
+    type: yesno
+    sql: ${brand} = 'Allegra K' ;;
+  }
+
   dimension: brand {
     type: string
     sql: ${TABLE}.brand ;;

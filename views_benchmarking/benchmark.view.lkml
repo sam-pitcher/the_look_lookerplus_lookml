@@ -6,31 +6,31 @@ view: benchmark {
 
     select
 
-    {% if order_items.order_created._in_query %}
+    {% if order_items_benchmark.order_created._in_query %}
     {% assign num_dims = num_dims | plus: 1 %}
     {% assign pk = pk | append: ', cast(order_created as string) ' %}
     order_created,
     {% endif %}
 
-    {% if order_items.country._in_query %}
+    {% if order_items_benchmark.country._in_query %}
     {% assign num_dims = num_dims | plus: 1 %}
     {% assign pk = pk | append: ', country ' %}
     country,
     {% endif %}
 
-    {% if order_items.product_category._in_query %}
+    {% if order_items_benchmark.product_category._in_query %}
     {% assign num_dims = num_dims | plus: 1 %}
     {% assign pk = pk | append: ', product_category ' %}
     product_category,
     {% endif %}
 
-    {% if order_items.status._in_query %}
+    {% if order_items_benchmark.status._in_query %}
     {% assign num_dims = num_dims | plus: 1 %}
     {% assign pk = pk | append: ', status ' %}
     status,
     {% endif %}
 
-    {% if order_items.state._in_query %}
+    {% if order_items_benchmark.state._in_query %}
     {% assign num_dims = num_dims | plus: 1 %}
     {% assign pk = pk | append: ', state ' %}
     state,
