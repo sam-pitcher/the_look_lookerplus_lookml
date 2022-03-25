@@ -1,4 +1,4 @@
-connection: "the_look_lookerplus"
+connection: "lookerplus"
 
 include: "/views/*.view.lkml"
 
