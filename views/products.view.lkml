@@ -11,7 +11,7 @@ view: products {
 
   dimension: is_my_brand {
     type: yesno
-    sql: ${brand} = 'Allegra K' ;;
+    sql: ${brand} = "{{ _user_attributes['brand'] }}" ;;
   }
 
   dimension: brand {

@@ -39,10 +39,10 @@ view: benchmark {
     {{ pk | append: ")"}} as pk,
 
     sum(sale_price) as sale_price
-    from `looker-ps-emea-consultants.the_look_perf_sam.order_items_order_struct_benchmark`
+    from `lookerplus.the_look_perf_sampitcher.order_items_order_struct_benchmark`
     where
     product_category in
-     (select category from `looker-ps-emea-consultants.the_look_perf.products` products
+     (select category from `lookerplus.the_look.products` products
      where brand = 'Allegra K'
      group by 1)
 
