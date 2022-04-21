@@ -173,6 +173,7 @@ view: order_items {
     group_label: "My Measures"
     type: sum
     sql: ${sale_price} ;;
+    value_format_name: usd
     filters: [products.is_my_brand: "Yes"]
   }
 
@@ -180,6 +181,7 @@ view: order_items {
     group_label: "Benchmark Measures"
     type: sum
     sql: ${sale_price} ;;
+    value_format_name: usd
   }
 
   measure: total_sales_amount_previous_period {
