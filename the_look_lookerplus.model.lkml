@@ -3,6 +3,10 @@ connection: "lookerplus"
 include: "/views/*.view.lkml"
 include: "/views_benchmarking/*.view"
 
+datagroup: current {
+  sql_trigger: select current_date() ;;
+}
+
 explore: order_items {
   sql_always_where:
   ${products.category} in
@@ -75,3 +79,5 @@ explore: order_items_benchmark {
     ;;
   }
 }
+
+explore: order_facts_pdt {}
