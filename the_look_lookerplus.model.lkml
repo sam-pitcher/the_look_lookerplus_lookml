@@ -3,17 +3,28 @@ connection: "lookerplus"
 include: "/views/*.view.lkml"
 include: "/views_benchmarking/*.view"
 
+include: "rfm/rfm.explore"
+
+include: "/views_denorm/*.view"
+
 datagroup: current {
   sql_trigger: select current_date() ;;
 }
 
+explore: order_items_denorm {
+  join: order_items_denorm__order_id_array {
+    sql: , UNNEST (${order_items_denorm.order_id_array}) AS order_items_denorm__order_id_array ;;
+    relationship: one_to_many
+  }
+}
+
 explore: order_items {
-  sql_always_where:
-  ${products.category} in
-  (select ${products.category} from ${products.SQL_TABLE_NAME} products
-  where ${products.brand} = 'Allegra K'
-  group by 1)
-  ;;
+  # sql_always_where:
+  # ${products.category} in
+  # (select ${products.category} from ${products.SQL_TABLE_NAME} products
+  # where ${products.brand} = 'Allegra K'
+  # group by 1)
+  # ;;
 
   # Users
   join: users {
