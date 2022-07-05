@@ -107,6 +107,13 @@ view: order_items {
     sql: ${TABLE}.sale_price ;;
   }
 
+  # Test
+
+  dimension: test_for_pdt_build_dim {
+    type: string
+    sql: "{{ _user_attributes['test_for_pdt_build'] }}" ;;
+  }
+
   # Measures
 
   # Order Count

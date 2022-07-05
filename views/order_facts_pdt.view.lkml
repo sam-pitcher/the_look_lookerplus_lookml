@@ -23,3 +23,16 @@ view: order_facts_pdt_user_attribute {
     sql: ${TABLE}.created_at ;;
   }
 }
+
+view: order_facts_pdt_ndt {
+  derived_table: {
+    datagroup_trigger: hour
+    explore_source: order_items {
+      column: test_for_pdt_build_dim {}
+    }
+  }
+  dimension: test_for_pdt_build_dim {
+    label: "Transaction Information Test for Pdt Build Dim"
+    description: ""
+  }
+}
