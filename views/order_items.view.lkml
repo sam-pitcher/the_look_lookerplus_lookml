@@ -217,4 +217,14 @@ view: order_items {
     filters: [period: "%This%"]
   }
 
+  measure: last_order_date {
+    type: max
+    sql: ${created_date} ;;
+  }
+
+  measure: days_since_last_order {
+    type: number
+    sql: date_diff(current_date, ${last_order_date}, day) ;;
+  }
+
 }
