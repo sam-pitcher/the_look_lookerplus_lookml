@@ -7,6 +7,10 @@ datagroup: current {
   sql_trigger: select current_date() ;;
 }
 
+datagroup: hour {
+  sql_trigger: select extract(hour from current_timestamp()) ;;
+}
+
 label: "uat"
 
 explore: order_items {
