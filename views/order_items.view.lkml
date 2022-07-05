@@ -111,6 +111,11 @@ view: order_items {
 
   # Order Count
 
+  measure: number_one {
+    type: sum
+    sql: 1 ;;
+  }
+
   measure: order_count {
     group_label: "My Measures"
     type: count_distinct

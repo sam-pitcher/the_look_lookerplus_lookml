@@ -7,6 +7,8 @@ datagroup: current {
   sql_trigger: select current_date() ;;
 }
 
+label: "uat"
+
 explore: order_items {
   sql_always_where:
   ${products.category} in
