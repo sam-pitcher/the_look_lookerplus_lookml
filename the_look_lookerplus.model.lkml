@@ -3,6 +3,9 @@ connection: "lookerplus"
 include: "/views/*.view.lkml"
 include: "/views_benchmarking/*.view"
 
+# dashboards
+include: "/dashboards/*.dashboard"
+
 datagroup: current {
   sql_trigger: select current_date() ;;
 }
@@ -11,15 +14,18 @@ datagroup: hour {
   sql_trigger: select extract(hour from current_timestamp()) ;;
 }
 
-label: "uat"
-
 explore: order_items {
-  sql_always_where:
-  ${products.category} in
-  (select ${products.category} from ${products.SQL_TABLE_NAME} products
-  where ${products.brand} = 'Allegra K'
-  group by 1)
-  ;;
+  # sql_always_where:
+  # ${products.category} in
+  # (select ${products.category} from ${products.SQL_TABLE_NAME} products
+  # where ${products.brand} = 'Allegra K'
+  # group by 1)
+  # ;;
+
+  access_filter: {
+    user_attribute: state
+    field: users.state
+  }
 
   # Users
   join: users {

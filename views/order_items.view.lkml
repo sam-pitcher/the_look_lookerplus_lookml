@@ -100,6 +100,8 @@ view: order_items {
   dimension: status {
     type: string
     sql: ${TABLE}.status ;;
+    html: {% if value == 'Shipped' %}samshipped
+    {% endif %};;
   }
 
   dimension: sale_price {
