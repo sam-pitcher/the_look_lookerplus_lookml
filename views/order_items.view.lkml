@@ -1,5 +1,27 @@
 include: "../views_common/period_over_period.view"
 
+explore: date_dims {}
+view: date_dims {
+  derived_table: {
+    sql: select
+    concat("FY - ", extract(year from created_at)) as year
+    from `lookerplus.the_look.order_items`
+
+    # filters
+    {% assign filters = _filters['date_dims.created_year_dim'] | split: "," %}
+    {% for i in filters %}
+    {{i}}
+    {% endfor %}
+    ;;
+  }
+  dimension: year {}
+  filter: created_year_dim {
+    # sql: {% cond}${created_date} ;;
+    suggest_explore: date_dims
+    suggest_dimension: date_dims.year
+  }
+}
+
 view: order_items {
   extends: [period_over_period]
   view_label: "Transaction Information"
@@ -25,6 +47,21 @@ view: order_items {
   dimension_group: pop_no_tz {
     sql: ${created_date} ;;
   }
+
+  filter: created_year_dim {
+    # sql: {% cond}${created_date} ;;
+    suggest_explore: date_dims
+    suggest_dimension: date_dims.year
+  }
+
+
+
+  # dimension: created_year_dim {
+  #   type: string
+  #   sql:  ;;
+  #   suggest_explore: date_dims
+  #   suggest_dimension: date_dims.year
+  # }
 
   dimension_group: delivered {
     type: time
@@ -189,6 +226,12 @@ view: order_items {
     sql: ${sale_price} ;;
     value_format_name: usd
     filters: [products.is_my_brand: "Yes"]
+  }
+
+  measure: total_sales_amount_moving_average {
+    group_label: "My Measures"
+    type: number
+    sql: AVG(${total_sales_amount}) OVER(ORDER BY ${created_date} RANGE BETWEEN 6 PRECEDING AND CURRENT ROW) ;;
   }
 
   measure: benchmark_total_sales_amount {
