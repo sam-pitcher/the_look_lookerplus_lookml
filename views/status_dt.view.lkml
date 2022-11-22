@@ -21,7 +21,8 @@ view: status_dt {
     AS users ON order_items.user_id = users.id
     GROUP BY
     1,
-    2
+    2,
+    3
     ORDER BY
     3 DESC
     ;;
