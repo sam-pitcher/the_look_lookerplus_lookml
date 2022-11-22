@@ -1,32 +1,36 @@
 explore: status_dt {}
 
 view: status_dt {
-  derived_table: {
-    datagroup_trigger: current
-    # increment_key: "created_date"
-    # explore_source: order_items {
-    #   column: created_date {}
-    #   column: status {}
-    #   column: benchmark_total_sales_amount {}
-    # }
-    sql:
-    SELECT
-    -- if dev -- "dev" AS env,
-    -- if prod -- "prod" AS env,
-    (DATE(order_items.created_at )) AS created_date,
-    order_items.status  AS status,
-    COALESCE(SUM(order_items.sale_price ), 0) AS total_sales_amount
-    FROM `lookerplus.the_look.order_items` AS order_items
-    LEFT JOIN `lookerplus.the_look.users`
-    AS users ON order_items.user_id = users.id
-    GROUP BY
-    1,
-    2,
-    3
-    ORDER BY
-    3 DESC
-    ;;
-  }
+  sql_table_name:
+  -- if dev -- `lookerplus.the_look.order_items_dev`
+  -- if prod -- `lookerplus.the_look.order_items_prod`
+  ;;
+  # derived_table: {
+  #   datagroup_trigger: current
+  #   # increment_key: "created_date"
+  #   # explore_source: order_items {
+  #   #   column: created_date {}
+  #   #   column: status {}
+  #   #   column: benchmark_total_sales_amount {}
+  #   # }
+  #   sql:
+  #   SELECT
+  #   -- if dev -- "dev" AS env,
+  #   -- if prod -- "prod" AS env,
+  #   (DATE(order_items.created_at )) AS created_date,
+  #   order_items.status  AS status,
+  #   COALESCE(SUM(order_items.sale_price ), 0) AS total_sales_amount
+  #   FROM `lookerplus.the_look.order_items` AS order_items
+  #   LEFT JOIN `lookerplus.the_look.users`
+  #   AS users ON order_items.user_id = users.id
+  #   GROUP BY
+  #   1,
+  #   2,
+  #   3
+  #   ORDER BY
+  #   3 DESC
+  #   ;;
+  # }
   dimension: created_date {
     type: date
   }
