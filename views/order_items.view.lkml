@@ -1,4 +1,5 @@
 include: "../views_common/period_over_period.view"
+include: "//constants/constants.view"
 
 explore: date_dims {}
 view: date_dims {
@@ -28,6 +29,10 @@ view: order_items {
   sql_table_name: `lookerplus.the_look.order_items`;;
 
   # Dates
+
+  # dimension: env_test {
+  #   sql: {{constants.env._sql}} ;;
+  # }
 
   dimension_group: created {
     type: time

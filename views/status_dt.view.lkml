@@ -11,6 +11,8 @@ view: status_dt {
     # }
     sql:
     SELECT
+    -- if dev -- "dev" AS env,
+    -- if prod -- "prod" AS env,
     (DATE(order_items.created_at )) AS created_date,
     order_items.status  AS status,
     COALESCE(SUM(order_items.sale_price ), 0) AS total_sales_amount
